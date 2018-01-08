@@ -1,4 +1,4 @@
-#include "checker.h"
+#include "shared.h"
 
 static	void	stack_destructor(void *content, size_t size)
 {

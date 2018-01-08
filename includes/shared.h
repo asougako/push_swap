@@ -17,5 +17,6 @@ void    inst_rr(t_list **stack_a, t_list **stack_b);
 void    inst_rra(t_list **stack_a, t_list **stack_b);
 void    inst_rrb(t_list **stack_a, t_list **stack_b);
 void    inst_rrr(t_list **stack_a, t_list **stack_b);
+void    mem_clean(t_list **stack_a, t_list **stack_b);
 
 #endif
