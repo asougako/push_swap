@@ -13,12 +13,12 @@ PS_SRC = $(addprefix $(PS_SRC_FOLD), $(PS_SRC_FILES))
 
 CHK_NAME = checker
 CHK_SRC_FOLD = checker_src/
-CHK_SRC_FILES = checker.c	check_if_sorted.c
+CHK_SRC_FILES = checker.c
 CHK_SRC = $(addprefix $(CHK_SRC_FOLD), $(CHK_SRC_FILES))
 
 SHARED_SRC_FOLD = shared_src/
 SHARED_SRC_FILES = inst_swap.c	inst_push.c		inst_rotate.c	inst_r_rotate.c\
-				   parse_args.c	mem_clean.c
+				   parse_args.c	is_sorted.c		mem_clean.c
 SHARED_SRC = $(addprefix $(SHARED_SRC_FOLD), $(SHARED_SRC_FILES))
 
 all: $(PS_NAME) $(CHK_NAME)

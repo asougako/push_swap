@@ -1,6 +1,6 @@
 #include "checker.h"
 
-void	is_sorted(t_list *stack_a, t_list *stack_b)
+t_bool	is_sorted(t_list *stack_a, t_list *stack_b)
 {
 	int prev;
 	int index;

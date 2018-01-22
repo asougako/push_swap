@@ -30,27 +30,27 @@ void	print_stacks(char *inst, t_list *stack_a, t_list *stack_b, uint64_t opt)
 static int check_inst(char *inst, t_list **stack_a, t_list **stack_b)
 {
 	if (ft_strcmp(inst, "sa") == 0)
-		inst_sa(stack_a, stack_b);
+		inst_sa(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "sb") == 0)
-		inst_sb(stack_a, stack_b);
+		inst_sb(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "ss") == 0)
-		inst_ss(stack_a, stack_b);
+		inst_ss(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "pa") == 0)
-		inst_pa(stack_a, stack_b );
+		inst_pa(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "pb") == 0)
-		inst_pb(stack_a, stack_b);
+		inst_pb(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "ra") == 0)
-		inst_ra(stack_a, stack_b);
+		inst_ra(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "rb") == 0)
-		inst_rb(stack_a, stack_b);
+		inst_rb(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "rr") == 0)
-		inst_rr(stack_a, stack_b);
+		inst_rr(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "rra") == 0)
-		inst_rra(stack_a, stack_b);
+		inst_rra(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "rrb") == 0)
-		inst_rrb(stack_a, stack_b);
+		inst_rrb(stack_a, stack_b, false);
 	else if (ft_strcmp(inst, "rrr") == 0)
-		inst_rrr(stack_a, stack_b);
+		inst_rrr(stack_a, stack_b, false);
 	else
 		return(-1);
 	return(0);
@@ -110,7 +110,14 @@ int		main(int argc, char *argv[])
 	if (parse_args(argc, argv, &stack_a) == 0)
 	{
 		exec_inst(&stack_a, &stack_b, opt);
-		check_if_sorted(stack_a, stack_b);
+		if (is_sorted(stack_a, stack_b) == false)
+		{
+			ft_printf("KO\n");
+		}
+		else
+		{
+			ft_printf("OK\n");
+		}
 	}
 	mem_clean(&stack_a, &stack_b);
 	return(0);

@@ -1,6 +1,6 @@
 #include "shared.h"
 
-void	inst_rra(t_list **stack_a, t_list **stack_b)
+void	inst_rra(t_list **stack_a, t_list **stack_b, t_bool print)
 {
 	t_list *before_last;
 
@@ -18,9 +18,11 @@ void	inst_rra(t_list **stack_a, t_list **stack_b)
 			(*before_last).next = NULL;
 		}
 	}
+	if (print)
+		ft_putendl("rra");
 }
 
-void	inst_rrb(t_list **stack_a, t_list **stack_b)
+void	inst_rrb(t_list **stack_a, t_list **stack_b, t_bool print)
 {
 	t_list *before_last;
 
@@ -38,10 +40,14 @@ void	inst_rrb(t_list **stack_a, t_list **stack_b)
 			(*before_last).next = NULL;
 		}
 	}
+	if (print)
+		ft_putendl("rrb");
 }
 
-void	inst_rrr(t_list **stack_a, t_list **stack_b)
+void	inst_rrr(t_list **stack_a, t_list **stack_b, t_bool print)
 {
-	inst_rra(stack_a, stack_b);
-	inst_rrb(stack_a, stack_b);
+	inst_rra(stack_a, stack_b, false);
+	inst_rrb(stack_a, stack_b, false);
+	if (print)
+		ft_putendl("rrr");
 }

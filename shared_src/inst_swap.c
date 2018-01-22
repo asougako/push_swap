@@ -2,7 +2,7 @@
 
 #define CURRENT ((**stack_a).content)
 #define NEXT ((*(**stack_a).next).content)
-void	inst_sa(t_list **stack_a, t_list **stack_b)
+void	inst_sa(t_list **stack_a, t_list **stack_b, t_bool print)
 {
 	int *tmp;
 
@@ -16,13 +16,15 @@ void	inst_sa(t_list **stack_a, t_list **stack_b)
 			NEXT = tmp;
 		}
 	}
+	if (print)
+		ft_putendl("sa");
 }
 #undef CURRENT
 #undef NEXT
 
 #define CURRENT ((**stack_b).content)
 #define NEXT ((*(**stack_b).next).content)
-void	inst_sb(t_list **stack_a, t_list **stack_b)
+void	inst_sb(t_list **stack_a, t_list **stack_b, t_bool print)
 {
 	int *tmp;
 
@@ -36,12 +38,16 @@ void	inst_sb(t_list **stack_a, t_list **stack_b)
 			NEXT = tmp;
 		}
 	}
+	if(print)
+		ft_putendl("sb");
 }
 #undef CURRENT
 #undef NEXT
 
-void	inst_ss(t_list **stack_a, t_list **stack_b)
+void	inst_ss(t_list **stack_a, t_list **stack_b, t_bool print)
 {
-	inst_sa(stack_a, stack_b);
-	inst_sb(stack_a, stack_b);
+	inst_sa(stack_a, stack_b, false);
+	inst_sb(stack_a, stack_b, false);
+	if(print)
+		ft_putendl("ss");
 }
