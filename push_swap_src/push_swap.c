@@ -12,29 +12,50 @@ int32_t	get_stack_val(t_list *stack, uint64_t index)
 	return(*(int*)((*stack).content));
 }
 
-int		get_stack_min(t_list *stack)
+void	get_stack_min(t_list *stack, int32_t *min)
 {
-	int64_t	min;
-	return(min);
+	min = (int32_t*)(*stack).content;
+	if (min == NULL)
+	{
+		return;
+	}
+	while (stack)
+	{
+		if (*min > *(int32_t*)(*stack).content)
+		{
+			min = (int32_t*)(*stack).content;
+		}
+		stack = (*stack).next;
+	}
 }
 
 int		algo1(t_list **stack_a, t_list **stack_b)
 {
 	int		inst_count;
-	int		min;
+	int		*min;
 
 	inst_count = 0;
 	while (is_sorted(*stack_a, *stack_b) == false)
 	{
-		dprintf(2, "stack_a[0] = %d\n", get_stack_val(*stack_a, 0));
-		dprintf(2, "stack_a[1] = %d\n", get_stack_val(*stack_a, 1));
-		if (get_stack_val(*stack_a, 0) > get_stack_val(*stack_a, 1))
+		sleep(3);
+
+		get_stack_min(*stack_a, min);
+
+		//	if a[0] == min: pb
+		dprintf(2, "min_a = %d\n", *min);
+		if (get_stack_val(*stack_a, 0) == *min)
 		{
-			inst_sa(stack_a, stack_b, true);
+			inst_pb(stack_a, stack_b, true);
 		}
-		inst_ra(stack_a, stack_b, true);
+//		else if (get_stack_val(*stack_a, 0) > get_stack_val(*stack_a, 1))
+//		{
+//			inst_sa(stack_a, stack_b, true);
+//		}
+		else
+		{
+			inst_rra(stack_a, stack_b, true);
+		}
 		inst_count++;
-		sleep(1);
 	}
 	return(inst_count);
 }
@@ -50,7 +71,7 @@ int		main(int argc, char *argv[])
 	if (parse_args(argc, argv, &stack_a) == 0)
 	{
 		inst_count = algo1(&stack_a, &stack_b);
-		ft_printf("mv = %d\n", inst_count);
+		dprintf(2, "mv = %llu\n", inst_count);
 	}
 	mem_clean(&stack_a, &stack_b);
 	return(0);
