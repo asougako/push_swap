@@ -110,7 +110,7 @@ int		main(int argc, char *argv[])
 	if (parse_args(argc, argv, &stack_a) == 0)
 	{
 		exec_inst(&stack_a, &stack_b, opt);
-		if (is_sorted(stack_a, stack_b) == false)
+		if (is_both_sorted(stack_a, stack_b) == false)
 		{
 			ft_printf("KO\n");
 		}

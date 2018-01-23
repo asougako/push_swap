@@ -17,7 +17,9 @@ void    inst_rr(t_list **stack_a, t_list **stack_b, t_bool print);
 void    inst_rra(t_list **stack_a, t_list **stack_b, t_bool print);
 void    inst_rrb(t_list **stack_a, t_list **stack_b, t_bool print);
 void    inst_rrr(t_list **stack_a, t_list **stack_b, t_bool print);
-t_bool	is_sorted(t_list *stack_a, t_list *stack_b);
+t_bool	is_both_sorted(t_list *stack_a, t_list *stack_b);
+t_bool	is_sorted(t_list *stack);
+t_bool	is_rsorted(t_list *stack);
 void    mem_clean(t_list **stack_a, t_list **stack_b);
 
 #endif
