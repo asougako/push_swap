@@ -81,6 +81,18 @@ t_bool	p1r2(t_list **stack_a, t_list **stack_b)
 	return (false);
 }
 
+t_bool	p1r3(t_list **stack_a, t_list **stack_b)
+{
+	int32_t	*buff1;
+
+	get_stack_val(*stack_a, 3, &buff1);
+	if (buff1 == NULL && is_sorted(*stack_a) == true)
+	{
+		return(true);
+	}
+	return(false);
+}
+
 t_bool	defaut(t_list **stack_a, t_list **stack_b)
 {
 	inst_rra(stack_a, stack_b, true);
@@ -89,14 +101,20 @@ t_bool	defaut(t_list **stack_a, t_list **stack_b)
 
 int		phase1(t_list **stack_a, t_list **stack_b)
 {
-	int			inst_count = 0;
+	int		ret;
+	char	*buff;
+	int		inst_count = 0;
 
 	while ((is_rsorted(*stack_b) == false) || *stack_a != NULL)
 	{
-		sleep(1);
-		dprintf(2, "phase1...\n");
-		dprintf(2, "stack_a=%p\n", *stack_a);
-		if(p1r2(stack_a, stack_b));			// if a[0] > a[1]: sa
+
+		while ((ret = get_next_line(0, &buff)) <= 0);
+		ft_strdel(&buff);
+		//		dprintf(2, "phase1...\n");
+		//		dprintf(2, "stack_a=%p\n", *stack_a);
+		if (p1r3(stack_a, stack_b))		// if a[0] == min: pb
+			break;
+		else if(p1r2(stack_a, stack_b));				// if a[0] > a[1]: sa
 		else if (p1r1(stack_a, stack_b));		// if a[0] == min: pb
 		else if(defaut(stack_a, stack_b));
 		inst_count++;
@@ -112,11 +130,10 @@ t_bool	p2r1(t_list **stack_a, t_list **stack_b)
 
 int		phase2(t_list **stack_a, t_list **stack_b)
 {
-	int			inst_count = 0;
+	int		inst_count = 0;
 
 	while (is_both_sorted(*stack_a, *stack_b) == false)
 	{
-		sleep(1);
 		dprintf(2, "phase2...\n");
 		p2r1(stack_a, stack_b);
 		inst_count++;
@@ -132,6 +149,15 @@ int		algo1(t_list **stack_a, t_list **stack_b)
 	inst_count += phase2(stack_a, stack_b);
 	dprintf(2, "Algo 1 executed in %d instructions\n", inst_count);
 }
+
+/*
+ *	Calculer la mediane
+ *	Phase1: while stack_a non trie && stack_b non reverse trie
+ *	Rule: si a[0] < med: pb
+ *	Rule: si a[0] > a[1]: sa
+ *	Rule> a[1]: sa
+ *	default: 
+ */
 
 int		main(int argc, char *argv[])
 {
