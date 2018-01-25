@@ -61,15 +61,18 @@ static int		check_arg(char *arg)
  */
 static int check_duplicate(int val, t_stack *stack_a)
 {
-//	while (stack_a)
-//	{
-//		if (val == *(int*)(*stack).content)
-//		{
-//			ft_printf("Error: duplicate argument\n");
-//			return(-1);
-//		}
-//		stack = (*stack).next;
-//	}
+	int index;
+
+	index=0;
+	while (*((*stack_a).stack + index) != NULL)
+	{
+		if (val == **((*stack_a).stack + index))
+		{
+			ft_printf("Error: duplicate argument\n");
+			return(-1);
+		}
+		index++;
+	}
 	return(0);
 }
 
@@ -77,8 +80,8 @@ t_stack	*new_stack(size_t len)
 {
 	t_stack *stack;
 
-	stack = ft_memalloc(sizeof(*stack));
-	(*stack).stack = ft_memalloc(len * sizeof(*(*stack).stack));
+	stack = (t_stack*)ft_memalloc(sizeof(*stack));
+	(*stack).stack = (int32_t**)ft_memalloc(len * sizeof(*(*stack).stack));
 	return(stack);
 }
 
@@ -108,8 +111,8 @@ int		parse_args(int argc, char *argv[], t_stack *stack_a)
 		{
 			return(-1);
 		}
-//		link = ft_lstnew(&value, sizeof(value));
-//		ft_lstadd_tail(stack, link);
+		*((*stack_a).stack + index - 1) = ft_memalloc(sizeof(int32_t));
+		**((*stack_a).stack + index - 1) = value;
 		index++;
 	}
 	return(0);

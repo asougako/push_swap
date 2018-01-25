@@ -1,27 +1,29 @@
 #include "checker.h"
 #include "shared.h"
 
-void	print_stacks(char *inst, t_list *stack_a, t_list *stack_b, uint64_t opt)
+void	print(char *inst, t_stack *stack_a, t_stack *stack_b, uint64_t opt)
 {
 	if (opt & OPT_V)
 	{
 		ft_printf("instruction: %s\n", inst);
-		while ((stack_a != NULL) || (stack_b != NULL))
+		while ((	(*stack_a).stack != NULL) || ((*stack_b).stack != NULL))
 		{
-			if (stack_a != NULL)
+			if ((*stack_a).stack != NULL)
 			{
-				ft_printf("\t%d", *(int*)((*stack_a).content));
-				stack_a = (*stack_a).next;
+				ft_printf("\t%d", *(int32_t*)((*stack_a).stack));
 			}
 			else
+			{
 				ft_printf("\t");
-			if (stack_b != NULL)
+			}
+			if ((*stack_b).stack != NULL)
 			{
-				ft_printf("\t%d\n", *(int*)((*stack_b).content));
-				stack_b = (*stack_b).next;
+				ft_printf("\t%d\n", *(int32_t*)((*stack_b).stack));
 			}
 			else
+			{
 				ft_printf("\t\n");
+			}
 		}
 		ft_printf("------------------------\n\ta\tb\n\n");
 	}
@@ -60,7 +62,7 @@ int		exec_inst(t_list **stack_a, t_list **stack_b, uint64_t opt)
 {
 	char *line;
 
-	print_stacks("init", *stack_a, *stack_b, opt);
+//0	print_stacks("init", *stack_a, *stack_b, opt);
 	while (get_next_line(0, &line) == 1)
 	{
 		if (check_inst(line, stack_a, stack_b) == -1)
@@ -69,7 +71,7 @@ int		exec_inst(t_list **stack_a, t_list **stack_b, uint64_t opt)
 			ft_printf("Error: bad instruction.\n");
 			return(-1);
 		}
-		print_stacks(line, *stack_a, *stack_b, opt);
+//		print_stacks(line, *stack_a, *stack_b, opt);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
@@ -109,6 +111,13 @@ int		main(int argc, char *argv[])
 	stack_b = new_stack(argc);
 	if (parse_args(argc, argv, stack_a) == 0)
 	{
+//		printf("%p = %d\n", ((*stack_a).stack + 0), *((*stack_a).stack + 0));
+//		printf("%p = %d\n", ((*stack_a).stack + 1), *((*stack_a).stack + 1));
+//		printf("%p = %d\n", ((*stack_a).stack + 2), *((*stack_a).stack + 2));
+//		printf("%p = %d\n", ((*stack_a).stack + 3), *((*stack_a).stack + 3));
+//		printf("%p = %d\n", ((*stack_a).stack + 4), *((*stack_a).stack + 4));
+//		printf("%p = %d\n", ((*stack_a).stack + 5), *((*stack_a).stack + 5));
+//		print("sa", stack_a, stack_b, opt);
 //		exec_inst(&stack_a, &stack_b, opt);
 //		if (is_both_sorted(stack_a, stack_b) == false)
 //		{

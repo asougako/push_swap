@@ -6,7 +6,7 @@
 
 typedef	struct	s_stack
 {
-	int32_t	*stack;
+	int32_t	**stack;
 	int32_t len;
 	int32_t	min;
 	int32_t	med;
