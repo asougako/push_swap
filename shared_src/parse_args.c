@@ -89,31 +89,29 @@ t_stack	*new_stack(size_t len)
  *	Detects errors in argv.
  *	Fill stack a.
  */
-int		parse_args(int argc, char *argv[], t_stack *stack_a)
+int		parse_args(int argc, char *argv[], t_stack *stack_a, t_stack *stack_b)
 {
-	int index;
+	int arg_index;
+	int stack_index;
 	int value;
 
-	index = 1;
-	while (index < argc)
+	arg_index = 0;
+	stack_index = 0;
+	while (arg_index < argc - 1)
 	{
-		if (**(argv + index) == '\0')
-		{
-			index++;
+		arg_index++;
+		if (**(argv + arg_index) == '\0')
 			continue;
-		}
-		if (check_arg(*(argv + index)) != 0)
-		{
+		if (check_arg(*(argv + arg_index)) != 0)
 			return(-1);
-		}
-		value = ft_atoi(*(argv + index));
+		value = ft_atoi(*(argv + arg_index));
 		if (check_duplicate(value, stack_a) != 0)
-		{
 			return(-1);
-		}
-		*((*stack_a).stack + index - 1) = ft_memalloc(sizeof(int32_t));
-		**((*stack_a).stack + index - 1) = value;
-		index++;
+		*((*stack_a).stack + stack_index) = ft_memalloc(sizeof(int32_t));
+		**((*stack_a).stack + stack_index) = value;
+		stack_index++;
 	}
+	(*stack_a).len = stack_index;
+	(*stack_b).len = 0;
 	return(0);
 }

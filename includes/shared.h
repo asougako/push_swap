@@ -13,23 +13,26 @@ typedef	struct	s_stack
 	int32_t	max;
 }				t_stack;
 
-
 t_stack	*new_stack(size_t len);
-int		parse_args(int argc, char *argv[], t_stack *stack);
-void    inst_sa(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_sb(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_ss(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_pa(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_pb(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_ra(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_rb(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_rr(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_rra(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_rrb(t_list **stack_a, t_list **stack_b, t_bool print);
-void    inst_rrr(t_list **stack_a, t_list **stack_b, t_bool print);
-t_bool	is_both_sorted(t_list *stack_a, t_list *stack_b);
-t_bool	is_sorted(t_list *stack);
-t_bool	is_rsorted(t_list *stack);
+int     parse_args(int argc, char *argv[], t_stack *stack_a, t_stack *stack_b);
+void    print(char *inst, t_stack *stack_a, t_stack *stack_b, uint64_t opt);
+
+void    inst_sa(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_sb(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_ss(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_pa(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_pb(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_ra(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rb(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rr(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rra(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rrb(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rrr(t_stack *stack_a, t_stack *stack_b, t_bool print);
+
+t_bool	is_both_sorted(t_stack *stack_a, t_stack *stack_b);
+t_bool	is_sorted(t_stack *stack);
+t_bool	is_rsorted(t_stack *stack);
+
 void    mem_clean(t_stack *stack_a, t_stack *stack_b);
 
 #endif

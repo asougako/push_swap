@@ -29,6 +29,10 @@ debug:
 	$(CC) -g -o $(CHK_NAME) $(CHK_SRC) $(SHARED_SRC) -I includes -I libft/includes libft/libft.a\
 		-fsanitize=address
 
+debug-osx:
+#	$(CC) -g -o $(PS_NAME) $(PS_SRC) $(SHARED_SRC) -I includes -I libft/includes libft/libft.a
+	$(CC) -g -o $(CHK_NAME) $(CHK_SRC) $(SHARED_SRC) -I includes -I libft/includes libft/libft.a
+
 $(PS_NAME): $(PS_SRC) $(SHARED_SRC)
 
 $(CHK_NAME): $(CHK_SRC) $(SHARED_SRC)

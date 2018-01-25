@@ -3,33 +3,37 @@
 
 void	print(char *inst, t_stack *stack_a, t_stack *stack_b, uint64_t opt)
 {
+	int32_t index;
+
+	index = 0;
 	if (opt & OPT_V)
 	{
 		ft_printf("instruction: %s\n", inst);
-		while ((	(*stack_a).stack != NULL) || ((*stack_b).stack != NULL))
+		while ((*((*stack_a).stack + index) != NULL) || (*((*stack_b).stack + index) != NULL))
 		{
-			if ((*stack_a).stack != NULL)
+			if (*((*stack_a).stack + index) != NULL)
 			{
-				ft_printf("\t%d", *(int32_t*)((*stack_a).stack));
+				ft_printf("\t%d", **((*stack_a).stack + index));
 			}
 			else
 			{
 				ft_printf("\t");
 			}
-			if ((*stack_b).stack != NULL)
+			if (*((*stack_b).stack + index) != NULL)
 			{
-				ft_printf("\t%d\n", *(int32_t*)((*stack_b).stack));
+				ft_printf("\t%d\n", **((*stack_b).stack + index));
 			}
 			else
 			{
 				ft_printf("\t\n");
 			}
+			index++;
 		}
-		ft_printf("------------------------\n\ta\tb\n\n");
+		ft_printf("-------------------------\n\ta\tb\n\n");
 	}
 }
 
-static int check_inst(char *inst, t_list **stack_a, t_list **stack_b)
+static int check_inst(char *inst, t_stack *stack_a, t_stack *stack_b)
 {
 	if (ft_strcmp(inst, "sa") == 0)
 		inst_sa(stack_a, stack_b, false);
@@ -58,11 +62,11 @@ static int check_inst(char *inst, t_list **stack_a, t_list **stack_b)
 	return(0);
 }
 
-int		exec_inst(t_list **stack_a, t_list **stack_b, uint64_t opt)
+int		exec_inst(t_stack *stack_a, t_stack *stack_b, uint64_t opt)
 {
 	char *line;
 
-//0	print_stacks("init", *stack_a, *stack_b, opt);
+	print("init", stack_a, stack_b, opt);
 	while (get_next_line(0, &line) == 1)
 	{
 		if (check_inst(line, stack_a, stack_b) == -1)
@@ -71,7 +75,7 @@ int		exec_inst(t_list **stack_a, t_list **stack_b, uint64_t opt)
 			ft_printf("Error: bad instruction.\n");
 			return(-1);
 		}
-//		print_stacks(line, *stack_a, *stack_b, opt);
+		print(line, stack_a, stack_b, opt);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
@@ -109,25 +113,20 @@ int		main(int argc, char *argv[])
 	opt = parse_opt(argc, argv);
 	stack_a = new_stack(argc);
 	stack_b = new_stack(argc);
-	if (parse_args(argc, argv, stack_a) == 0)
+
+	if (parse_args(argc, argv, stack_a, stack_b) == 0)
 	{
-//		printf("%p = %d\n", ((*stack_a).stack + 0), *((*stack_a).stack + 0));
-//		printf("%p = %d\n", ((*stack_a).stack + 1), *((*stack_a).stack + 1));
-//		printf("%p = %d\n", ((*stack_a).stack + 2), *((*stack_a).stack + 2));
-//		printf("%p = %d\n", ((*stack_a).stack + 3), *((*stack_a).stack + 3));
-//		printf("%p = %d\n", ((*stack_a).stack + 4), *((*stack_a).stack + 4));
-//		printf("%p = %d\n", ((*stack_a).stack + 5), *((*stack_a).stack + 5));
-//		print("sa", stack_a, stack_b, opt);
-//		exec_inst(&stack_a, &stack_b, opt);
-//		if (is_both_sorted(stack_a, stack_b) == false)
-//		{
-//			ft_printf("KO\n");
-//		}
-//		else
-//		{
-//			ft_printf("OK\n");
-//		}
+		exec_inst(stack_a, stack_b, opt);
+		if (is_both_sorted(stack_a, stack_b) == false)
+		{
+			ft_printf("KO\n");
+		}
+		else
+		{
+			ft_printf("OK\n");
+		}
 	}
+
 	mem_clean(stack_a, stack_b);
 	return(0);
 }
