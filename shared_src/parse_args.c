@@ -1,5 +1,8 @@
 #include "shared.h"
 
+/*
+ *	Make arg easyer to handle by atoi.
+ */
 static char *aclean(const char *src)
 {
 	char *ret;
@@ -29,6 +32,9 @@ static char *aclean(const char *src)
 	return(ret);
 }
 
+/*
+ *	Check if arg is a valid int32_t value.
+ */
 static int		check_arg(char *arg)
 {
 	int		intval;
@@ -50,30 +56,44 @@ static int		check_arg(char *arg)
 	return(0);
 }
 
-static int check_duplicate(int val, t_list *stack)
+/*
+ *	Check id val already exists.
+ */
+static int check_duplicate(int val, t_stack *stack_a)
 {
-	while (stack)
-	{
-		if (val == *(int*)(*stack).content)
-		{
-			ft_printf("Error: duplicate argument\n");
-			return(-1);
-		}
-		stack = (*stack).next;
-	}
+//	while (stack_a)
+//	{
+//		if (val == *(int*)(*stack).content)
+//		{
+//			ft_printf("Error: duplicate argument\n");
+//			return(-1);
+//		}
+//		stack = (*stack).next;
+//	}
 	return(0);
 }
 
-int		parse_args(int argc, char *argv[], t_list **stack)
+t_stack	*new_stack(size_t len)
+{
+	t_stack *stack;
+
+	stack = ft_memalloc(sizeof(*stack));
+	(*stack).stack = ft_memalloc(len * sizeof(*(*stack).stack));
+	return(stack);
+}
+
+/*
+ *	Detects errors in argv.
+ *	Fill stack a.
+ */
+int		parse_args(int argc, char *argv[], t_stack *stack_a)
 {
 	int index;
 	int value;
-	t_list	*link;
 
 	index = 1;
 	while (index < argc)
 	{
-		//	ft_printf("argv = %s\n", *(argv + index));
 		if (**(argv + index) == '\0')
 		{
 			index++;
@@ -84,14 +104,13 @@ int		parse_args(int argc, char *argv[], t_list **stack)
 			return(-1);
 		}
 		value = ft_atoi(*(argv + index));
-		if (check_duplicate(value, *stack) != 0)
+		if (check_duplicate(value, stack_a) != 0)
 		{
 			return(-1);
 		}
-		link = ft_lstnew(&value, sizeof(value));
-		ft_lstadd_tail(stack, link);
+//		link = ft_lstnew(&value, sizeof(value));
+//		ft_lstadd_tail(stack, link);
 		index++;
 	}
 	return(0);
 }
-

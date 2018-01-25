@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #define STACKS t_list **stack_a, t_list **stack_b
-void	get_stack_val(t_list *stack, uint64_t index, int32_t **buff)
+void	get_val(t_list *stack, uint64_t index, int32_t **buff)
 {
 	*buff = NULL;
 	if (stack == NULL)
@@ -22,7 +22,7 @@ void	get_stack_val(t_list *stack, uint64_t index, int32_t **buff)
 	*buff = (int*)((*stack).content);
 }
 
-void	get_stack_min(t_list *stack, int32_t **min)
+void	get_min(t_list *stack, int32_t **min)
 {
 	*min = NULL;
 	if (stack == NULL)
@@ -39,6 +39,16 @@ void	get_stack_min(t_list *stack, int32_t **min)
 		stack = (*stack).next;
 	}
 	//dprintf(2, "min = %d\n", **min);
+}
+
+void	get_max(t_list *stack, int32_t **min)
+{
+
+}
+
+void	get_med(t_list *stack, int32_t **min)
+{
+
 }
 
 t_bool	p1r1(t_list **stack_a, t_list **stack_b)
@@ -101,17 +111,13 @@ t_bool	defaut(t_list **stack_a, t_list **stack_b)
 
 int		phase1(t_list **stack_a, t_list **stack_b)
 {
-	int		ret;
 	char	*buff;
 	int		inst_count = 0;
 
 	while ((is_rsorted(*stack_b) == false) || *stack_a != NULL)
 	{
-
-		while ((ret = get_next_line(0, &buff)) <= 0);
+		while (get_next_line(0, &buff) <= 0);
 		ft_strdel(&buff);
-		//		dprintf(2, "phase1...\n");
-		//		dprintf(2, "stack_a=%p\n", *stack_a);
 		if (p1r3(stack_a, stack_b))		// if a[0] == min: pb
 			break;
 		else if(p1r2(stack_a, stack_b));				// if a[0] > a[1]: sa
@@ -130,10 +136,14 @@ t_bool	p2r1(t_list **stack_a, t_list **stack_b)
 
 int		phase2(t_list **stack_a, t_list **stack_b)
 {
+	char	*buff;
 	int		inst_count = 0;
 
 	while (is_both_sorted(*stack_a, *stack_b) == false)
 	{
+		while (get_next_line(0, &buff) <= 0);
+		ft_strdel(&buff);
+
 		dprintf(2, "phase2...\n");
 		p2r1(stack_a, stack_b);
 		inst_count++;

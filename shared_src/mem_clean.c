@@ -1,13 +1,9 @@
 #include "shared.h"
 
-static	void	stack_destructor(void *content, size_t size)
+void	mem_clean(t_stack *stack_a, t_stack *stack_b)
 {
-	(void)size;
-	ft_memdel(&content);
-}
-
-void	mem_clean(t_list **stack_a, t_list **stack_b)
-{
-	ft_lstdel(stack_a, stack_destructor);
-	ft_lstdel(stack_b, stack_destructor);
+	ft_memdel((void**)&(*stack_a).stack);
+	ft_memdel((void**)&stack_a);
+	ft_memdel((void**)&(*stack_b).stack);
+	ft_memdel((void**)&stack_b);
 }

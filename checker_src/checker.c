@@ -101,24 +101,24 @@ uint64_t	parse_opt(int argc, char *argv[])
 int		main(int argc, char *argv[])
 {
 	uint64_t	opt;
-	t_list		*stack_a;
-	t_list		*stack_b;
+	t_stack		*stack_a;
+	t_stack		*stack_b;
 
-	stack_a = NULL;
-	stack_b = NULL;
 	opt = parse_opt(argc, argv);
-	if (parse_args(argc, argv, &stack_a) == 0)
+	stack_a = new_stack(argc);
+	stack_b = new_stack(argc);
+	if (parse_args(argc, argv, stack_a) == 0)
 	{
-		exec_inst(&stack_a, &stack_b, opt);
-		if (is_both_sorted(stack_a, stack_b) == false)
-		{
-			ft_printf("KO\n");
-		}
-		else
-		{
-			ft_printf("OK\n");
-		}
+//		exec_inst(&stack_a, &stack_b, opt);
+//		if (is_both_sorted(stack_a, stack_b) == false)
+//		{
+//			ft_printf("KO\n");
+//		}
+//		else
+//		{
+//			ft_printf("OK\n");
+//		}
 	}
-	mem_clean(&stack_a, &stack_b);
+	mem_clean(stack_a, stack_b);
 	return(0);
 }

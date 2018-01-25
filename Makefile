@@ -24,7 +24,7 @@ SHARED_SRC = $(addprefix $(SHARED_SRC_FOLD), $(SHARED_SRC_FILES))
 all: $(PS_NAME) $(CHK_NAME)
 
 debug:
-	$(CC) -g -o $(PS_NAME) $(PS_SRC) $(SHARED_SRC) -I includes -I libft/includes libft/libft.a\
+#	$(CC) -g -o $(PS_NAME) $(PS_SRC) $(SHARED_SRC) -I includes -I libft/includes libft/libft.a\
 		-fsanitize=address
 	$(CC) -g -o $(CHK_NAME) $(CHK_SRC) $(SHARED_SRC) -I includes -I libft/includes libft/libft.a\
 		-fsanitize=address
