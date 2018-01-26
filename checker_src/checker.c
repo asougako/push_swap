@@ -1,5 +1,4 @@
 #include "checker.h"
-#include "shared.h"
 
 void	print(char *inst, t_stack *stack_a, t_stack *stack_b, uint64_t opt)
 {

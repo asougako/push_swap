@@ -33,7 +33,7 @@ void	inst_rbf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz)
 {
 	int32_t *tmp;
 
-	if (*((*stack_b).stack + 0) && *((*stack_b).stack + 1) || plz)
+	if ((*((*stack_b).stack + 0) && *((*stack_b).stack + 1)) || plz)
 	{
 		tmp = *((*stack_b).stack + 0);
 		ft_memmove(\

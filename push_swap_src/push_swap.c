@@ -1,63 +1,12 @@
 #include "push_swap.h"
-#include "shared.h"
-#include <unistd.h>
 
-#define STACKS t_list **stack_a, t_list **stack_b
-void	get_val(t_list *stack, uint64_t index, int32_t **buff)
-{
-	*buff = NULL;
-	if (stack == NULL)
-	{
-		return;
-	}
-	while (index > 0)
-	{
-		stack = (*stack).next;
-		if (stack == NULL)
-		{
-			return;
-		}
-		index--;
-	}
-	*buff = (int*)((*stack).content);
-}
-
-void	get_min(t_list *stack, int32_t **min)
-{
-	*min = NULL;
-	if (stack == NULL)
-	{
-		return;
-	}
-	*min = (int32_t*)(*stack).content;
-	while (stack)
-	{
-		if (**min > *(int32_t*)(*stack).content)
-		{
-			*min = (int32_t*)(*stack).content;
-		}
-		stack = (*stack).next;
-	}
-	//dprintf(2, "min = %d\n", **min);
-}
-
-void	get_max(t_list *stack, int32_t **min)
-{
-
-}
-
-void	get_med(t_list *stack, int32_t **min)
-{
-
-}
-
-t_bool	p1r1(t_list **stack_a, t_list **stack_b)
+t_bool	p1r1(t_stack *stack_a, t_stack *stack_b)
 {
 	int32_t		*min;
 	int32_t		*buff;
 
-	get_stack_min(*stack_a, &min);
-	get_stack_val(*stack_a, 0, &buff);
+	min = get_min(stack_a);
+	buff = get_val(stack_a, 0);
 	if (buff == NULL || min == NULL)
 	{
 		return(false);
@@ -70,15 +19,15 @@ t_bool	p1r1(t_list **stack_a, t_list **stack_b)
 	return (false);
 }
 
-t_bool	p1r2(t_list **stack_a, t_list **stack_b)
+t_bool	p1r2(t_stack *stack_a, t_stack *stack_b)
 {
 	int32_t		*min;
 	int32_t		*buff1;
 	int32_t		*buff2;
 
-	get_stack_min(*stack_a, &min);
-	get_stack_val(*stack_a, 0, &buff1);
-	get_stack_val(*stack_a, 1, &buff2);
+	min = get_min(stack_a);
+	buff1 = get_val(stack_a, 0);
+	buff2 = get_val(stack_a, 1);
 	if (buff1 == NULL || buff2 == NULL)
 	{
 		return(false);
@@ -91,55 +40,58 @@ t_bool	p1r2(t_list **stack_a, t_list **stack_b)
 	return (false);
 }
 
-t_bool	p1r3(t_list **stack_a, t_list **stack_b)
+t_bool	p1r3(t_stack *stack_a, t_stack *stack_b)
 {
 	int32_t	*buff1;
 
-	get_stack_val(*stack_a, 3, &buff1);
-	if (buff1 == NULL && is_sorted(*stack_a) == true)
+	buff1 = get_val(stack_a, 3);
+	if (buff1 == NULL && is_sorted(stack_a) == true)
 	{
 		return(true);
 	}
 	return(false);
 }
 
-t_bool	defaut(t_list **stack_a, t_list **stack_b)
+t_bool	defaut(t_stack *stack_a, t_stack *stack_b)
 {
 	inst_rra(stack_a, stack_b, true);
 	return(true);
 }
 
-int		phase1(t_list **stack_a, t_list **stack_b)
+int		phase1(t_stack *stack_a, t_stack *stack_b)
 {
 	char	*buff;
 	int		inst_count = 0;
 
-	while ((is_rsorted(*stack_b) == false) || *stack_a != NULL)
+	while ((is_rsorted(stack_b) == false) || stack_a != NULL)
 	{
 		while (get_next_line(0, &buff) <= 0);
 		ft_strdel(&buff);
-		if (p1r3(stack_a, stack_b))		// if a[0] == min: pb
+		if (p1r3(stack_a, stack_b))			// if a[0] == min: pb
 			break;
-		else if(p1r2(stack_a, stack_b));				// if a[0] > a[1]: sa
-		else if (p1r1(stack_a, stack_b));		// if a[0] == min: pb
-		else if(defaut(stack_a, stack_b));
+		else if(p1r2(stack_a, stack_b))
+			;	// if a[0] > a[1]: sa
+		else if (p1r1(stack_a, stack_b))
+			;	// if a[0] == min: pb
+		else if(defaut(stack_a, stack_b))
+			;
 		inst_count++;
 	}
 	return(inst_count);
 }
 
-t_bool	p2r1(t_list **stack_a, t_list **stack_b)
+t_bool	p2r1(t_stack *stack_a, t_stack *stack_b)
 {
 	inst_pa(stack_a, stack_b, true);
 	return(true);
 }
 
-int		phase2(t_list **stack_a, t_list **stack_b)
+int		phase2(t_stack *stack_a, t_stack *stack_b)
 {
 	char	*buff;
 	int		inst_count = 0;
 
-	while (is_both_sorted(*stack_a, *stack_b) == false)
+	while (is_ok(stack_a, stack_b) == false)
 	{
 		while (get_next_line(0, &buff) <= 0);
 		ft_strdel(&buff);
@@ -151,7 +103,24 @@ int		phase2(t_list **stack_a, t_list **stack_b)
 	return(inst_count);
 }
 
-int		algo1(t_list **stack_a, t_list **stack_b)
+static uint64_t    parse_opt(int argc, char *argv[])
+{
+	uint64_t opt;
+
+	opt = 0;
+	while (*argv)
+	{
+		if (ft_strcmp(*argv, "-s") == 0)
+		{
+			opt |= OPT_S;
+			*argv = ft_strdup("\0");
+		}
+		argv++;
+	}
+	return(opt);
+}
+
+void	algo1(t_stack *stack_a, t_stack *stack_b)
 {
 	int		inst_count = 0;
 
@@ -166,21 +135,22 @@ int		algo1(t_list **stack_a, t_list **stack_b)
  *	Rule: si a[0] < med: pb
  *	Rule: si a[0] > a[1]: sa
  *	Rule> a[1]: sa
- *	default: 
+ *	default:
  */
 
 int		main(int argc, char *argv[])
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
-	uint32_t	inst_count;
+	uint64_t    opt;
+	t_stack     *stack_a;
+	t_stack     *stack_b;
 
-	stack_a = NULL;
-	stack_b = NULL;
-	if (parse_args(argc, argv, &stack_a) == 0)
+	opt = parse_opt(argc, argv);
+	stack_a = new_stack(argc);
+	stack_b = new_stack(argc);
+	if (parse_args(argc, argv, stack_a, stack_b) == 0)
 	{
-		inst_count = algo1(&stack_a, &stack_b);
+		//algo1(stack_a, stack_b);
 	}
-	mem_clean(&stack_a, &stack_b);
+	mem_clean(stack_a, stack_b);
 	return(0);
 }
