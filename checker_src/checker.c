@@ -9,24 +9,17 @@ void	print(char *inst, t_stack *stack_a, t_stack *stack_b, uint64_t opt)
 	if (opt & OPT_V)
 	{
 		ft_printf("instruction: %s\n", inst);
-		while ((*((*stack_a).stack + index) != NULL) || (*((*stack_b).stack + index) != NULL))
+		while ((*((*stack_a).stack + index) != NULL)\
+				|| (*((*stack_b).stack + index) != NULL))
 		{
 			if (*((*stack_a).stack + index) != NULL)
-			{
 				ft_printf("\t%d", **((*stack_a).stack + index));
-			}
 			else
-			{
 				ft_printf("\t");
-			}
 			if (*((*stack_b).stack + index) != NULL)
-			{
 				ft_printf("\t%d\n", **((*stack_b).stack + index));
-			}
 			else
-			{
 				ft_printf("\t\n");
-			}
 			index++;
 		}
 		ft_printf("-------------------------\n\ta\tb\n\n");
@@ -62,7 +55,7 @@ static int check_inst(char *inst, t_stack *stack_a, t_stack *stack_b)
 	return(0);
 }
 
-int		exec_inst(t_stack *stack_a, t_stack *stack_b, uint64_t opt)
+int		exec_insts(t_stack *stack_a, t_stack *stack_b, uint64_t opt)
 {
 	char *line;
 
@@ -116,8 +109,8 @@ int		main(int argc, char *argv[])
 
 	if (parse_args(argc, argv, stack_a, stack_b) == 0)
 	{
-		exec_inst(stack_a, stack_b, opt);
-		if (is_both_sorted(stack_a, stack_b) == false)
+		exec_insts(stack_a, stack_b, opt);
+		if (is_ok(stack_a, stack_b) == false)
 		{
 			ft_printf("KO\n");
 		}

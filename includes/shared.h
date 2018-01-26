@@ -23,13 +23,18 @@ void    inst_ss(t_stack *stack_a, t_stack *stack_b, t_bool print);
 void    inst_pa(t_stack *stack_a, t_stack *stack_b, t_bool print);
 void    inst_pb(t_stack *stack_a, t_stack *stack_b, t_bool print);
 void    inst_ra(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_raf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz);
 void    inst_rb(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rbf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz);
 void    inst_rr(t_stack *stack_a, t_stack *stack_b, t_bool print);
 void    inst_rra(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rraf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz);
 void    inst_rrb(t_stack *stack_a, t_stack *stack_b, t_bool print);
+void    inst_rrbf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz);
 void    inst_rrr(t_stack *stack_a, t_stack *stack_b, t_bool print);
 
-t_bool	is_both_sorted(t_stack *stack_a, t_stack *stack_b);
+t_bool	is_ok(t_stack *stack_a, t_stack *stack_b);
+t_bool	is_empty(t_stack *stack);
 t_bool	is_sorted(t_stack *stack);
 t_bool	is_rsorted(t_stack *stack);
 

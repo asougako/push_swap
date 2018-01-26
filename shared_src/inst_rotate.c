@@ -2,9 +2,14 @@
 
 void	inst_ra(t_stack *stack_a, t_stack *stack_b, t_bool print)
 {
+	inst_raf(stack_a, stack_b, print, false);
+}
+
+void	inst_raf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz)
+{
 	int32_t *tmp;
 
-	if (*((*stack_a).stack + 0) && *((*stack_a).stack + 1))
+	if ((*((*stack_a).stack + 0) && *((*stack_a).stack + 1)) || plz)
 	{
 		tmp = *((*stack_a).stack + 0);
 		ft_memmove(\
@@ -21,9 +26,14 @@ void	inst_ra(t_stack *stack_a, t_stack *stack_b, t_bool print)
 
 void	inst_rb(t_stack *stack_a, t_stack *stack_b, t_bool print)
 {
+	inst_rbf(stack_a, stack_b, print, false);
+}
+
+void	inst_rbf(t_stack *stack_a, t_stack *stack_b, t_bool print, t_bool plz)
+{
 	int32_t *tmp;
 
-	if (*((*stack_b).stack + 0) && *((*stack_b).stack + 1))
+	if (*((*stack_b).stack + 0) && *((*stack_b).stack + 1) || plz)
 	{
 		tmp = *((*stack_b).stack + 0);
 		ft_memmove(\

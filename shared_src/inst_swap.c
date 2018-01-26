@@ -1,57 +1,39 @@
 #include "shared.h"
 
-#define CURRENT ((**stack_a).content)
-#define NEXT ((*(**stack_a).next).content)
+#define STACK(ST, IN) *((*stack_##ST).stack + IN)
 void	inst_sa(t_stack *stack_a, t_stack *stack_b, t_bool print)
 {
-	//int *tmp;
-	//
-	//(void)stack_b;
-	//if (*stack_a)
-	//{
-	//if ((**stack_a).next)
-	//{
-	//tmp = CURRENT;
-	//CURRENT = NEXT;
-	//NEXT = tmp;
-	//}
-	//}
+	if (*((*stack_a).stack + 0) && *((*stack_a).stack + 1))
+	{
+		STACK(a, 0) = (int32_t*)((uint64_t)STACK(a, 0) ^ (uint64_t)STACK(a, 1));
+		STACK(a, 1) = (int32_t*)((uint64_t)STACK(a, 1) ^ (uint64_t)STACK(a, 0));
+		STACK(a, 0) = (int32_t*)((uint64_t)STACK(a, 0) ^ (uint64_t)STACK(a, 1));
+	}
 	if (print)
 	{
 		ft_putendl("sa");
 	}
 }
-#undef CURRENT
-#undef NEXT
-
-#define CURRENT ((**stack_b).content)
-#define NEXT ((*(**stack_b).next).content)
 void	inst_sb(t_stack *stack_a, t_stack *stack_b, t_bool print)
 {
-	//int *tmp;
-	//
-	//(void)stack_a;
-	//if (*stack_b)
-	//{
-	//if ((**stack_b).next)
-	//{
-	//tmp = CURRENT;
-	//CURRENT = NEXT;
-	//NEXT = tmp;
-	//}
-	//}
+	if (*((*stack_b).stack + 0) && *((*stack_b).stack + 1))
+	{
+		STACK(b, 0) = (int32_t*)((uint64_t)STACK(b, 0) ^ (uint64_t)STACK(b, 1));
+		STACK(b, 1) = (int32_t*)((uint64_t)STACK(b, 1) ^ (uint64_t)STACK(b, 0));
+		STACK(b, 0) = (int32_t*)((uint64_t)STACK(b, 0) ^ (uint64_t)STACK(b, 1));
+	}
 	if(print)
 	{
 		ft_putendl("sb");
 	}
 }
-#undef CURRENT
-#undef NEXT
 
 void	inst_ss(t_stack *stack_a, t_stack *stack_b, t_bool print)
 {
 	inst_sa(stack_a, stack_b, false);
 	inst_sb(stack_a, stack_b, false);
 	if(print)
+	{
 		ft_putendl("ss");
+	}
 }
